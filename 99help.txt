@@ -1,0 +1,10 @@
+Responds with a quote from Brooklyn 99.
+Type the following keywords to get the corresponding quote
+----------------------------------------------------------------
+100 :  I'm the human form of the :100: emoji.
+bp :  Bingpot!
+cool :  Cool. Cool cool cool cool cool cool cool, no doubt no doubt no doubt no doubt.
+adr :  With all due respect, I am gonna completely ignore everything you just said.
+el :  The English language can not fully capture the depth and complexity of my thoughts, so I’m incorporating emojis into my speech to better express myself. Winky face.
+rt :  Jake, why don’t you just do the right thing and jump out of a window?
+title :  Title of your sex tape.
