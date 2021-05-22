@@ -1,4 +1,4 @@
 Simulates rolling a dice.
-Call the command and enter the number of dices you want to roll,
+Call the command and enter the number of dice you want to roll,
 and the number of sides each dice would have.
 Note that we're rolling identical dice (same number of sides).
