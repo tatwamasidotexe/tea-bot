@@ -9,17 +9,20 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+#setting command prefix
 bot = commands.Bot(command_prefix = '!')
 
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
+#function to return a file's contentz (duh)
 def readfile(filename) :
     with open(filename) as file_object:
         contents = file_object.read()
     return contents
 
+#99 command code
 @bot.command(name="99", help = readfile('99help.txt') )
 async def nine_nine(ctx, keyw) :
     
@@ -42,11 +45,13 @@ async def nine_nine(ctx, keyw) :
         if keyw == key :
             await ctx.send(value)
     
+#roll (dice) command code
 @bot.command(name='roll', help = readfile('rollhelp.txt'))
 async def roll(ctx, no_of_dice: int, no_of_sides: int) :
     dice = [
-        str(random.choice(range(1, no_of_sides+1 ))) for _ in range(no_of_dice)
+        str(random.choice(range(1, no_of_sides + 1 ))) for _ in range(no_of_dice)
     ]
     await ctx.send(', '.join(dice))
 
+#run ze bot
 bot.run(TOKEN)
