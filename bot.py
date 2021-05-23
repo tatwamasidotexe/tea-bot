@@ -1,18 +1,25 @@
 import os
 import random
+import platform
+import sysconfig
 
 import discord
+import asyncio
 from discord import channel
 from discord import guild
 from discord import client
+from discord import colour
+from discord.colour import Color
 from dotenv import load_dotenv
 
-from discord.ext import commands
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix = 't ')
+intents = discord.Intents.default()
+bot = Bot(command_prefix = 't ', intents = intents)
 
 # utility fucn, opens and reads file contents
 def readfile(filename) :
@@ -45,9 +52,35 @@ def count_monke(msg):
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} is online!')
-    channel = bot.get_channel(834718249013870615)
-    await channel.send("Hola amigooooooooooz I am online! ♪┏(・o･)┛♪┗ ( ･o･) ┓♪")
+    # channel = bot.get_channel(834718249013870615)
+    # await channel.send("Hola amigooooooooooz I am online! ♪┏(・o･)┛♪┗ ( ･o･) ┓♪")
     await bot.change_presence(status = discord.Status.online, activity = discord.Game("ze vibes ♪┏(・o･)┛♪"))
+
+
+# CODE FOR WELCOMING NEW MEMBERS INTO THE SERVER. EXCEPT
+# IT DID NOT WORK BECAUSE APPARENTLY YOU'VE TO INCLUDE SOME INTENT THINGIES AND FOR THAT 
+# I'D NEED TO REPLACE THE BOT = COMMANDS.BOT() THINGY AND THAT WOULD AFFECT THE REST OF THE CODE
+# IDK WHAT TO DO
+
+# newUsermsg = """Hiiiiiiiiiiiiiiiiiiii so glad to have you here boi :D
+# We prefer monkes over humans and are big fans of *Interstellar*.
+# Hope you hab a good time!
+# banana for you :banana:
+# """
+
+# @bot.event
+# async def on_member_join(member) :
+#     try:
+#         await bot.send_message(member, newUsermsg)
+#         print("Texted new member. Lol.")
+#     except:
+#         print("couldn't send message to " + member.name)
+#     embed = discord.Embed(
+#         title = "Welcome "+ member.name + " :)))"
+#         # description="We're so glad you're here!"
+#         # color = discord.Color.green()
+#     )
+
 
 # event that reads each message and calls count_monke() if message contains monke
 @bot.event
@@ -105,15 +138,28 @@ async def roll(ctx, no_of_dice: int, no_of_sides: int) :
     ]
     await ctx.send(', '.join(dice))
 
-# count monke command
-@bot.command(name="monke", help = "counts monkes")
-async def monke_count(ctx) :
-    with open('monkes.txt') as file_object:
-        cnt = file_object.read()
-        print("\ncnt read from file before sending it to channel = " + cnt)
-        await ctx.send(cnt)
-        file_object.close()
+# a polling command
+@bot.command(name = "poll", help = "poll stuff yunno")
+async def poll(ctx, *args):
+    poll_title = " ".join(args)
 
+    embed = discord.Embed(
+        title = "Created dope ass poll lol.",
+        description = f"{poll_title}",
+        color = discord.Color.green()
+    )
+    
+    embed.set_footer(
+        text = f"Poll created by yours truly: {ctx.author}. *React to vote, babes.*"
+    )
+
+    embed_message = await ctx.send(embed=embed)
+
+    await embed_message.add_reaction("🔥")
+    await embed_message.add_reaction("🤮")
+    await embed_message.add_reaction("🤷")
+ 
+    
 # @bot.command()
 # async def ping
 
